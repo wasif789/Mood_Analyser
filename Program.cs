@@ -2,11 +2,15 @@
 
 namespace Mood_Analyser
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to mood analyser problem");
+            //Get input statement from user
+            Console.WriteLine("Welcome To Mood Analyser!");
+            string[] message = Console.ReadLine().ToLower().Split(" ");
+            MoodAnalyser setmood = new MoodAnalyser(message);
+            Console.WriteLine("Mood is: {0}", setmood.ReturnMessage());
         }
     }
 }
