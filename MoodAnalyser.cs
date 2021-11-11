@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Mood_Analyser
 {
@@ -16,11 +17,19 @@ namespace Mood_Analyser
 
         public string ReturnMessage()
         {
-            if (message.Contains("sad"))
+            try
             {
-                return "Sad";
+
+                if (message.Contains("sad"))
+                {
+                    return "Sad";
+                }
+                else
+                {
+                    return "Happy";
+                }
             }
-            else
+            catch (ArgumentNullException)
             {
                 return "Happy";
             }
