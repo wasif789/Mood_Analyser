@@ -57,5 +57,23 @@ namespace Mood_Analyser
                 throw new CustomizeException(CustomizeException.MyException.CONSTRUCTOR_NOT_FOUND, "Class does not have such Constructor");
             }
         }
+        //Invoke a Method from MoodAnalyser Class
+        public string InvokeMethod(string methodname, string[] message)
+        {
+            try
+            {
+                MoodAnalyserFactory moodAnalyserFactory = new MoodAnalyserFactory();
+                Type type = typeof(Mood_Analyser.MoodAnalyser);
+                object methodObject = moodAnalyserFactory.CreatingParameterisedObjectWithMethod("Mood_Analyser.MoodAnalyser", "MoodAnalyser", message);
+                MethodInfo methodInfo = type.GetMethod(methodname);
+                string method = (string)methodInfo.Invoke(methodObject, null);
+                return method;
+
+            }
+            catch (NullReferenceException)
+            {
+                throw new CustomizeException(CustomizeException.MyException.METHOD_NOT_FOUND, "No method found");
+            }
+        }
     }
 }
