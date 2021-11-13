@@ -223,5 +223,56 @@ namespace TestMood
             Assert.AreEqual(expected, actual);
         }
 
+        /// <summary>
+        /// TC 7.1
+        /// </summary>
+        [TestMethod]
+        [TestCategory("Set Field Value")]
+        public void Given_FieldName_Return_Message()
+        {
+            string[] happymessage = { "i", "am", "in", "happy", "mood" };
+            string[] expected = happymessage;
+            string[] actual = moodAnalyserFactory.SetFieldValue("message", happymessage);
+            Assert.AreEqual(expected, actual);
+        }
+        /// <summary>
+        /// TC 7.2
+        /// </summary>
+        [TestMethod]
+        [TestCategory("Set Field Value")]
+        public void Given_Invalid_FieldName_Return_Error_Message()
+        {
+            try
+            {
+                string[] happymessage = { "i", "am", "in", "happy", "mood" };
+                string[] actual = moodAnalyserFactory.SetFieldValue("messagsWrong", happymessage);
+            }
+            catch (CustomizeException actual)
+            {
+                string expected = "No such field found";
+                Assert.AreEqual(expected, actual.Message);
+            }
+
+        }
+        /// <summary>
+        /// TC 7.3
+        /// </summary>
+        [TestMethod]
+        [TestCategory("Set Field Value")]
+        public void Given_Empty_Return_Error_Message()
+        {
+            try
+            {
+                string[] happymessage = { "" };
+                string[] actual = moodAnalyserFactory.SetFieldValue("message", happymessage);
+            }
+            catch (CustomizeException actual)
+            {
+                string expected = "Message is empty";
+                Assert.AreEqual(expected, actual.Message);
+            }
+        }
+
     }
+
 }
