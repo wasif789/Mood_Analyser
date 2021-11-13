@@ -10,8 +10,10 @@ namespace Mood_Analyser
     {
         string[] message;
 
+        //Default constructor
         public MoodAnalyser()
         {
+            Console.WriteLine("This is default constructor");
         }
 
         //Parameterised Constructor

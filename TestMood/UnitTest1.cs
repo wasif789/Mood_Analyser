@@ -8,7 +8,7 @@ namespace TestMood
         {
            
         MoodAnalyser setmood;
-        MoodAnalyser setmood1;
+        MoodAnalyser setmoodAny;
         MoodAnalyser setNull;
         MoodAnalyser setEmpty;
         MoodAnalyserFactory moodAnalyserFactory;
@@ -17,14 +17,13 @@ namespace TestMood
         [TestInitialize]
             public void SetUp()
             {
-            string[] message = { "i", "am", "in", "sad", "mood" };
-            setmood = new MoodAnalyser(message);
-            string[] message1 = { "i", "am", "in", "any", "mood" };
-            setmood1 = new MoodAnalyser(message1);
+            string[] sadmessage = { "i", "am", "in", "sad", "mood" };
+            setmood = new MoodAnalyser(sadmessage);
+            string[] happymessage = { "i", "am", "in", "any", "mood" };
+            setmoodAny = new MoodAnalyser(happymessage);
             string[] message2 = null;
             setNull = new MoodAnalyser(message2);
             string[] message3 = { "" };
-            setEmpty = new MoodAnalyser(message3);
             setEmpty = new MoodAnalyser(message3);
             moodAnalyserFactory = new MoodAnalyserFactory();
         }
@@ -39,13 +38,13 @@ namespace TestMood
             }
         //To check if user is happy
         [TestMethod]
-            public void HappyTestMethod()
-            {
-                string actual = setmood1.ReturnMessage();
-                string expected = "Happy";
-                Assert.AreEqual(expected, actual);
-            }
-
+        [TestCategory("Happy")]
+        public void Given_AnyMood_return_Happy()
+        {
+            string actual = setmoodAny.ReturnMessage();
+            string expected = "Happy";
+            Assert.AreEqual(expected, actual);
+        }
         //Null reference Exception
         [TestMethod]
         [TestCategory("NullReferenceException")]
@@ -131,5 +130,64 @@ namespace TestMood
                 Assert.AreEqual(expected, actual.Message);
             }
         }
+
+        [TestMethod]
+        [TestCategory("Using Parameterised Reflection")]
+        public void Given_MoodAnalyserAny_using_Reflection_Return_Parameterisedobject()
+        {
+            string[] happymessage = { "i", "am", "in", "any", "mood" };
+            MoodAnalyser expected = setmoodAny;
+            object constructor;
+            try
+            {
+                constructor = moodAnalyserFactory.CreatingParameterisedObjectWithMethod("Mood_Analyser.MoodAnalyser", "MoodAnalyser", happymessage);
+                expected.Equals(constructor);
+            }
+            catch (CustomizeException actual)
+            {
+                Assert.AreEqual(expected, actual.Message);
+            }
+        }
+        /// <summary>
+        /// TC 5.2
+        /// </summary>
+        [TestMethod]
+        [TestCategory("Using Parameterised Reflection")]
+        public void Given_InvalidconstructorMoodAnalyser_using_Reflection_Return_Parameterisedobject()
+        {
+            string[] happymessage = { "i", "am", "in", "any", "mood" };
+            string expected = "Class does not exist";
+            object constructor;
+            try
+            {
+                constructor = moodAnalyserFactory.CreatingParameterisedObjectWithMethod("Mood_Analyser.MoodAnalyser", "MoodAnalye", happymessage);
+                expected.Equals(constructor);
+            }
+            catch (CustomizeException actual)
+            {
+                Assert.AreEqual(expected, actual.Message);
+            }
+        }
+        /// <summary>
+        /// TC 5.3
+        /// </summary>
+        [TestMethod]
+        [TestCategory("Using Parameterised Reflection")]
+        public void Given_InvalidClass_MoodAnalyser_using_Reflection_Return_Parameterisedobject()
+        {
+            string[] happymessage = { "i", "am", "in", "any", "mood" };
+            string expected = "Class does not have such Constructor";
+            object constructor;
+            try
+            {
+                constructor = moodAnalyserFactory.CreatingParameterisedObjectWithMethod("Mood_Analyser.MoodAna", "MoodAnalyser", happymessage);
+                expected.Equals(constructor);
+            }
+            catch (CustomizeException actual)
+            {
+                Assert.AreEqual(expected, actual.Message);
+            }
+        }
+
     }
 }
