@@ -9,6 +9,11 @@ namespace Mood_Analyser
     public class MoodAnalyser
     {
         string[] message;
+
+        public MoodAnalyser()
+        {
+        }
+
         //Parameterised Constructor
         public MoodAnalyser(string[] message)
         {
